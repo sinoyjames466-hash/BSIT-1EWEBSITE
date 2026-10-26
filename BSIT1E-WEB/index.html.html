@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BSIT 1E</title>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+/* Animated Background */
+
+body::before{
+content:"";
+position:fixed;
+width:300%;
+height:300%;
+background:
+radial-gradient(circle,#00bfff22 2px,transparent 3px);
+background-size:90px 90px;
+animation:bgMove 45s linear infinite;
+z-index:-3;
+}
+
+@keyframes bgMove{
+from{transform:translate(0,0);}
+to{transform:translate(-500px,-500px);}
+}
+
+/* Blue Glow */
+
+.glow1{
+position:fixed;
+width:500px;
+height:500px;
+background:#00aaff;
+filter:blur(180px);
+opacity:.18;
+left:-150px;
+top:-100px;
+animation:float1 10s ease-in-out infinite alternate;
+z-index:-2;
+border-radius:50%;
+}
+
+.glow2{
+position:fixed;
+width:500px;
+height:500px;
+background:#0066ff;
+filter:blur(180px);
+opacity:.15;
+right:-150px;
+bottom:-100px;
+animation:float2 12s ease-in-out infinite alternate;
+z-index:-2;
+border-radius:50%;
+}
+
+@keyframes float1{
+to{transform:translate(300px,200px);}
+}
+
+@keyframes float2{
+to{transform:translate(-300px,-150px);}
+}
+
+/* Navigation */
+
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 70px;
+background:#00000088;
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+nav h2{
+color:#00bfff;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:35px;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+transition:.3s;
+}
+
+nav a:hover{
+color:#00bfff;
+}
+
+/* Hero */
+
+.hero{
+
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+padding:60px;
+
+}
+
+.heroBox{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:60px;
+
+background:rgba(255,255,255,.05);
+padding:60px;
+border-radius:35px;
+backdrop-filter:blur(20px);
+box-shadow:0 20px 60px rgba(0,191,255,.2);
+transform-style:preserve-3d;
+transition:.4s;
+
+}
+
+.heroBox:hover{
+transform:rotateX(2deg) rotateY(-2deg);
+}
+
+.heroText{
+flex:1;
+}
+
+.heroText h1{
+font-size:60px;
+margin-bottom:20px;
+
+}
+
+.heroText span{
+color:#00bfff;
+}
+
+.heroText p{
+opacity:.8;
+margin-bottom:30px;
+}
+
+
+button{
+
+padding:15px 45px;
+border:none;
+border-radius:40px;
+background:#00bfff;
+color:white;
+font-size:18px;
+cursor:pointer;
+
+box-shadow:0 0 30px #00bfff;
+transition:.3s;
+
+}
+
+button:hover{
+transform:translateY(-5px);
+box-shadow:0 0 45px #00bfff;
+}
+
+.hero img{
+width:450px;
+border-radius:25px;
+box-shadow:0 0 40px #00bfff55;
+transition:.5s;
+
+}
+
+.hero img:hover{
+transform:scale(1.05) rotateY(8deg);
+
+}
+
+/* Sections */
+
+section{
+padding:100px 8%;
+}
+
+.title{
+text-align:center;
+font-size:42px;
+margin-bottom:25px;
+color:#00bfff;
+
+}
+
+.title2{
+text-align:center;
+font-size:20px;
+margin-bottom:40px;
+color:#aeaeae;
+
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:25px;
+text-align:center;
+backdrop-filter:blur(20px);
+transition:.4s;
+box-shadow:0 10px 35px rgba(0,0,0,.5);
+
+}
+
+.card:hover{
+transform:translateY(-10px) rotateX(5deg);
+box-shadow:0 15px 45px rgba(0,191,255,.35);
+
+}
+
+.card img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:15px;
+border:3px solid #00bfff;
+
+}
+
+/* Gallery */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+
+}
+
+.gallery img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+transition:.5s;
+box-shadow:0 0 25px rgba(0,191,255,.25);
+
+}
+
+.gallery img:hover{
+transform:scale(1.05) rotateY(5deg);
+
+}
+
+/* Zoom Background */
+
+.zoom-container {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Zoomed Image */
+        .zoom-container img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 15px;
+            box-shadow: 0 0 40px #00aaff;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+/* Close Button */
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #00aaff;
+}
+
+/* Zoom Background */
+
+.zoom-container {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Zoomed text */
+        .zoom-container h3 {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 15px;
+            box-shadow: 0 0 40px #00aaff;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+/* Close Button */
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #00aaff;
+}
+
+/* Footer */
+
+footer{
+padding:30px;
+text-align:center;
+background:black;
+color:#888;
+
+}
+
+@media(max-width:900px){
+
+.heroBox{
+flex-direction:column;
+
+}
+
+.hero img{
+width:100%;
+
+}
+
+.heroText h1{
+font-size:40px;
+
+}
+
+nav{
+padding:20px;
+
+}
+
+nav ul{
+display:none;
+
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<nav>
+
+<h2>1E</h2>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#officers">Officers</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#Students">Students</a></li>
+
+</ul>
+
+</nav>
+
+<div class="hero">
+
+<div class="heroBox">
+
+<div class="heroText">
+
+<h1>WELCOME TO <span>BSIT 1E</span></h1>
+
+<p>
+students that have dreams in life, memories, friendship, leaderships.
+</p>
+
+<button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+Explore
+</button>
+
+</div>
+
+<img src="LOGO IT.png" alt="School" width="250" height="350">
+
+</div>
+
+</div>
+
+<section id="about">
+
+<h2 class="title">TCC MISSION & VISION</h2>
+
+<div class="grid">
+<div class="card" onclick="zoomImage(this)">
+<h3>Mission</h3>
+<p>Tagoloan Community College is committed to produce competent graduates fully equipped with knowledge and skills driven by values conforming to global standards.
+</div>
+
+<div class="card">
+<h3>Vision</h3>
+<p>To be a premier community based institution by 2030 producing globally competent graduates.
+</p>
+</div>
+
+<div class="card">
+<h3>Philosophy</h3>
+<p>Tagoloan Community College upholds the premise that education is a succes if and when the people live a decent and prosperous life through adherence to standards of morality, employment in enterprises, and competent practice of entrepreneurial skills.
+</p>
+</div>
+</section>
+
+<section id="about">
+
+<h2 class="title">NSTP MISSION & VISION</h2>
+
+<div class="grid">
+<div class="card" onclick="zoomImage(this)">
+<h3>Mission</h3>
+<p>In concurrence to the mission of TCC, the NSTP shall instill to the students the character of good citizens equipped with knowledge and skills propelled by values conforming to global standards.
+</div>
+
+<div class="card">
+<h3>Vision</h3>
+<p>To be the forefront implementer of TCC's aspirations in producing globally-competent nation-builders that are ready to serve and protect the country.
+</p>
+</div>
+
+<div class="card">
+<h3>Preamble</h3>
+<p>We, the sovereign Filipino people,
+imploring the aid of Almighty God, in order to build a just and humane society and establish a Government
+that shall embody our ideals and aspirations,
+promote the common good, conserve and develop our patrimony, and secure to ourselves our posterity the blessings of independence and democracy under the rule of law and a regime of truth, justice, freedom, love, equality, and peace,
+do ordain and promulgate this Constitution.
+</p>
+</div>
+</section>
+
+
+<section id="officers">
+<h2 class="title">1E Officers</h2>
+<div class="grid">
+<div class="card">
+
+<img src="Mayor.jpg" onclick="zoomImage(this)">
+<h3>MAYOR</h3>
+<p>Maydel Leyros Tadeo</p>
+</div>
+
+<div class="card">
+<img src="Jamesdavesinoy.jpg" onclick="zoomImage(this)">
+<h3>VICE MAYOR</h3>
+<p>James Dave Sinoy</p>
+</div>
+
+<div class="card">
+<img src="secretary.jpg" onclick="zoomImage(this)">
+<h3>SECRETARY</h3>
+<p>Nikka Bayron</p>
+</div>
+
+<div class="card">
+<img src="treasurer.jpg" onclick="zoomImage(this)">
+<h3>TREASURER</h3>
+<p>Jessa Joy Remolisan</p>
+</div>
+
+<div class="card">
+<img src="PIO-EXTERNAL.jpg" onclick="zoomImage(this)">
+<h3>PIO- EXTERNAL</h3>
+<p>James Añonuevo</p>
+</div>
+
+<div class="card">
+<img src="PIO-INTERNAL.jpg" onclick="zoomImage(this)">
+<h3>PIO- INTERNAL</h3>
+<p>Earl Sean Agabao</p>
+</div>
+
+<div class="card">
+<img src="PIO-INTERNAL.jpg" onclick="zoomImage(this)">
+<h3>AUDITOR</h3>
+<p>Khendrex Vergel</p>
+</div>
+</div>
+
+</section>
+
+<section id="gallery">
+
+<h2 class="title">Gallery</h2>
+<h3 class="title2">Memories,  photos, events</h3>
+<div class="gallery">
+
+<img src="ITPICS.jpg" onclick="zoomImage(this)">
+<img src="ITPIC2.jpg" onclick="zoomImage(this)">
+<img src="ITPICS3.jpg" onclick="zoomImage(this)">
+<img src="ITPICS4.jpg" onclick="zoomImage(this)">
+<img src="ITPICS5.jpg" onclick="zoomImage(this)">
+<img src="ITPICS6.jpg" onclick="zoomImage(this)">
+<img src="ITPICS7.jpg" onclick="zoomImage(this)">
+<img src="ITPICS8.jpg" onclick="zoomImage(this)">
+<img src="ITPICS9.jpg" onclick="zoomImage(this)">
+<img src="ITPICS10.jpg" onclick="zoomImage(this)">
+<img src="ITPICS11.jpg" onclick="zoomImage(this)">
+<img src="ITPICS12.jpg" onclick="zoomImage(this)">
+<img src="" onclick="zoomImage(this)">
+
+
+</div>
+<!-- Zoom Window -->
+    <div class="zoom-container" id="zoomBox" onclick="closeZoom()">
+
+        <span class="close">&times;</span>
+
+        <img id="zoomedImage" onclick="event.stopPropagation()">
+
+    </div>
+
+    <script>
+        function zoomImage(image) {
+            const zoomBox = document.getElementById("zoomBox");
+            const zoomedImage = document.getElementById("zoomedImage");
+
+            zoomedImage.src = image.src;
+            zoomBox.style.display = "flex";
+        }
+
+        function closeZoom() {
+            document.getElementById("zoomBox").style.display = "none";
+        }
+    </script>
+</section>
+
+<section id="Students">
+
+<h2 class="title">1E STUDENTS</h2>
+<div class="grid">
+<div class="card">
+
+<h3>Boys</h3>
+<p>
+    <ol>
+        <li>Agabao, Earl Sean l.
+        <li>Alemania, Amiel Jones B.</li>
+        <li>Añonuevo, James J.</li>
+        <li>Baluarte, Khendrix Vergel B.</li>
+        <li>Canencia, Efren S.</li>
+        <li>Casiño, Zachary Benedict L.</li>
+        <li>Catalan, Jereco</li>
+        <li>Doblas, Jerich Jael</li>
+        <li>Donque, John Dwayne P.</li>
+        <li>Flores, Steven G.</li>
+        <li>Geromo, Alteo Carl O.</li>
+        <li>Gonzaga, Prince Kim</li>
+        <li>Labor, Ceejay L.</li>
+        <li>Luga, Renz D.</li>
+        <li>Lamayon, Ivan Fave B.</li>
+        <li>Naldo, John Carlo D.</li>
+        <li>Orlasan, Clint East Miller T.</li>
+        <li>Pagadilan, Hassanal A.</li>
+        <li>Pagulong, Luister Jhun B.</li>
+        <li>Patriana, Rj L.</li>
+        <li>Ragmac, Joshua</li>
+        <li>Sinoy, James Dave S.</li>
+        <li>Tadle, Yuki Ezequiel</li> 
+        <li>Taladua, Ian Rey G.</li>
+        <li>Trangia, Renjy O.</li>
+        <li>Villadores, Jomans B.</li>
+        <li>Airron, Imperial J.</li>
+    </ol>
+
+</p>
+</div>
+
+<div class="card">
+<h3>Girl</h3>
+<p>
+    <ol>
+        <li>Arances, Christina P.</li>
+        <li>Arnejo, Richel Ann A.</li>
+        <li>Baranggot, Rhea I.</li>
+        <li>Bayron, Nicca Joy A.</li>
+        <li>Basiculan, Prince Baby D.</li>
+        <li>Caballero, Shiela Mae C.</li>
+        <li>Colot, Stephanie Raine L.</li>
+        <li>Dagoc, Jasmine Louis M.</li>
+        <li>Pabericio, Jessa Mae C.</li>
+        <li>Patindol, Mave Jean Q.</li>
+        <li>Remolisan, Jessa Joy C.</li>
+        <li>Rondina, Angelica M.</li>
+        <li>Sebusa, Janvy S.</li>
+        <li>Tadeo, Maydel Leyros</li>
+        <li>Villanueva, Rhea Mea Y.</li>
+    </ol>
+
+</p>
+</div>
+
+<div class="card">
+<h3>hahahah</h3>
+<p>Meet classmates and create unforgettable memories.</p>
+</div>
+
+</div>
+</section>
+
+<footer>© 2026 BSIT 1E | WEB DEV: James </footer>
+
+<script>
+
+const hero=document.querySelector(".heroBox");
+
+document.addEventListener("mousemove",(e)=>{
+
+let x=(window.innerWidth/2-e.clientX)/40;
+
+let y=(window.innerHeight/2-e.clientY)/40;
+
+hero.style.transform=
+`rotateY(${x}deg) rotateX(${-y}deg)`;
+
+});
+</script>
+
+</body>
+</html>
